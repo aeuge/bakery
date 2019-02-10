@@ -1,0 +1,33 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+    <bean id="cacheEngine" class="ru.aeuge.bakery.cache.CacheEngineImpl">
+        <constructor-arg value="100000"/>
+        <constructor-arg value="300000"/>
+        <constructor-arg value="0"/>
+        <constructor-arg value="false"/>
+    </bean>
+
+    <bean id="messageSystem" class="ru.aeuge.bakery.messagesystem.MessageSystemImpl">
+    </bean>
+
+    <bean id="messageSystemContext" class="ru.aeuge.bakery.app.MessageSystemContext">
+        <constructor-arg ref="messageSystem"/>
+    </bean>
+
+    <bean id="dbService" class="ru.aeuge.bakery.DBservice.DBServiceHibernateImpl">
+        <constructor-arg ref="cacheEngine"/>
+        <constructor-arg value="DBService"/>
+        <constructor-arg ref="messageSystemContext"/>
+    </bean>
+
+    <bean id="templateProcessor" class="ru.aeuge.bakery.servlet.TemplateProcessor">
+    </bean>
+
+    <bean id="dbDataInitializer" class="ru.aeuge.bakery.DBservice.db.DBDataInitializer">
+        <constructor-arg ref="dbService"/>
+    </bean>
+</beans>
