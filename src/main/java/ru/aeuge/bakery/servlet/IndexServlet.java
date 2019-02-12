@@ -34,6 +34,7 @@ public class IndexServlet extends HttpServlet {
         String requestPassword = request.getParameter(ADMIN_PAGE_PASSWORD);
         if (requestPassword==null) {requestPassword = "";}
         String loginAlert = "";
+
         if ((!requestPassword.equals("admin")) && (requestPassword.length()>0)) {
             loginAlert = "1";
         } else if (requestPassword.equals("admin")){

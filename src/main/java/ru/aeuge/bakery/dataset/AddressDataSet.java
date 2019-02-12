@@ -31,8 +31,4 @@ public class AddressDataSet extends DataSet {
                 '}';
     }
 
-    @Override
-    public void setAddress(String s) {
-        //do nothing
-    }
 }

@@ -32,10 +32,6 @@ public class UsersDataSet extends DataSet {
         this.age = age;
     }
 
-    public void setAddress(String address) {
-        this.address.setAddress(address);
-    }
-
     public UsersDataSet() {
     }
 

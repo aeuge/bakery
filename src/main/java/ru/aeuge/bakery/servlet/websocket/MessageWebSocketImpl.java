@@ -14,7 +14,7 @@ import javax.websocket.server.ServerEndpoint;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-@ServerEndpoint("/message")
+@ServerEndpoint(value = "/message", configurator = EndpointConfigurator.class)
 public class MessageWebSocketImpl implements MessageWebSocket {
     private Address address;
     private Queue<MessageWebSocketImpl> users = new ConcurrentLinkedQueue<>();
@@ -27,7 +27,7 @@ public class MessageWebSocketImpl implements MessageWebSocket {
         address = new Address();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
         System.out.println("mws created");
-        context.getMessageSystem().addAddressee(this);
+
     }
 
     @OnMessage
@@ -43,6 +43,9 @@ public class MessageWebSocketImpl implements MessageWebSocket {
 
     @OnOpen
     public void onOpen(Session session) {
+        String cookie = session.getUserProperties().get("cookie").toString();
+        //TODO проверку хэша пароля при создании вебсокета
+        context.getMessageSystem().addAddressee(this);
         users.add(this);
         setSession(session);
         System.out.println("onOpen");
